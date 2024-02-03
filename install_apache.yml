@@ -1,43 +1,45 @@
 ---
 - hosts: all
   become: true
-  # become_user: munaray
-  # vars:
-  #   ansible_become_password: "munahCode1sid.com"
   tasks:
 
-  - name: update repository index
-    apt:
-      update_cache: yes
-    when: ansible_distribution == "Ubuntu"
+  # - name: update repository index for Ubuntu
+  #   apt:
+  #     update_cache: yes
+  #   when: ansible_distribution == "Ubuntu"
 
 
-  - name: install apache2 package
+  # - name: install apache and php
+  #   package:
+  #     name:
+  #      - "{{ apache_package }}"
+  #      - "{{ php_package }}"
+  #     state: latest
+  #     update_cache: yes
+    # when: ansible_distribution == "Ubuntu"
+
+
+  # - name: update repository index openEuler
+  #   dnf:
+  #     update_cache: yes
+  #   when: ansible_distribution == "openEuler"
+
+
+  - name: install apache and php for Ubuntu server
     apt:
-      name: apache2
+      name:
+        - apache2
+        - libapache2-mod-php
       state: latest
-    when: ansible_distribution == "Ubuntu"
+      update_cache: yes
+    when: ansible_distribution == "Ubuntu""
 
-  - name: add php support for apache
-    apt:
-     name: libapache2-mod-php
-     state: latest
-    when: ansible_distribution == "Ubuntu"
-
-  - name: update repository index
+  - name: install apache and php for openEuler server
     dnf:
+      name:
+        - httpd
+        - php
+      state: latest
       update_cache: yes
     when: ansible_distribution == "openEuler"
 
-
-  - name: install apache2 package
-    dnf:
-      name: httpd
-      state: latest
-    when: ansible_distribution == "openEuler"
-
-  - name: add php support for apache
-    dnf:
-     name: php
-     state: latest
-    when: ansible_distribution == "openEuler"

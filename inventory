@@ -1,4 +1,11 @@
+[web_servers]
 ubuntu@100.25.47.79
-ubuntu@52.86.46.123
-ubuntu@52.86.95.0
 munaray@192.168.43.206
+
+[db_servers]
+ubuntu@52.86.46.123
+
+[file_servers]
+ubuntu@52.86.95.0
+
+

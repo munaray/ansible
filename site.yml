@@ -1,0 +1,34 @@
+---
+- hosts: all
+  become: true
+  tasks:
+  - name: install updates (openEuler)
+    dnf:
+      update_only: yes
+      update_cache: yes
+    when: ansible_distribution == "openEuler"
+
+  - name: install updates (Ubuntu)
+    apt:
+      upgrade: dist
+      update_cache: yes
+    when: ansible_distribution == "Ubuntu"
+
+- hosts: web_servers
+  become: true
+  tasks:
+  - name: install apache and php for Ubuntu server
+    apt:
+      name:
+        - apache2
+        - libapache2-mod-php
+      state: latest
+    when: ansible_distribution == "Ubuntu"
+
+  - name: install apache and php for openEuler server
+    dnf:
+      name:
+        - httpd
+        - php
+      state: latest
+    when: ansible_distribution == "openEuler"
